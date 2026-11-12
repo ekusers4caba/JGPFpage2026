@@ -1,6 +1,6 @@
 import { Vector3, Quaternion } from "@babylonjs/core";
 
-import type { SceneData } from "./interface";
+import { SceneData } from "./interfaces";
 
 // rotate box
 let boxAngle: number = 0.3;
@@ -31,7 +31,6 @@ export default function createRunScene(runScene: SceneData) {
     boxAngle += boxSpeed;
     boxAngle %= 1;
 
-    
     // move light in ellipse  and cycle luma
     runScene.lightSpot.position = new Vector3(
       lightXpos + 8 * Math.sin(lightAngle * 2 * Math.PI),
@@ -42,7 +41,7 @@ export default function createRunScene(runScene: SceneData) {
     lightAngle += lightSpeed;
     lightAngle %= 1;
 
-        // vertical oscilation of meshes
+    // vertical oscilation of meshes
     runScene.box.position.y =
       boxPositionY + verticalRangeY * Math.sin(verticalAngle * 2 * Math.PI);
     runScene.sphere.position.y =

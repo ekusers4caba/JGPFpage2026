@@ -1,4 +1,4 @@
-import type { SceneData } from "./interface";
+import type { SceneData } from "./interfaces";
 
 import {
   Scene,
@@ -16,8 +16,8 @@ import {
   Engine,
 } from "@babylonjs/core";
 
-function createBox(scene: Scene) {
-  let box = MeshBuilder.CreateBox("box",{ size: 1 }, scene);
+function createBox(scene : Scene) {
+  let box = MeshBuilder.CreateBox("box", {size:1}, scene );
   box.position.y = 3;
   box.position.y = 0.51;
   return box;
