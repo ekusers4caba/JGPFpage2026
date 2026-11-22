@@ -23,4 +23,4 @@ let startScene = createStartScene(eng);
 eng.runRenderLoop(() => {
     startScene.render();
 });     
-ShowInspector(startScene); 
+//ShowInspector(startScene); 
