@@ -23,7 +23,7 @@ function createBox(scene: Scene) {
   box.position.y = 0.0;
   box.position.y = 0.501
   const myMaterial = new StandardMaterial("myMaterial", scene);
-  const texture = new Texture(`${import.meta.env.BASE_URL}assets/leopard_fur.JPG`, scene);
+  const texture = new Texture("/JGPFpage2026/projects/texture/assets/leopard_fur.JPG",scene);
   myMaterial.diffuseTexture = texture;
   box.material = myMaterial;
   return box;
