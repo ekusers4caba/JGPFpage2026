@@ -50,7 +50,6 @@ function createArcRotateCamera(scene: Scene) {
   return camera;
 }
 
-// Load each model once, then clone it to the positions listed below.
 function addAsset(
   assetsManager: AssetsManager,
   fileName: string,
@@ -102,7 +101,6 @@ export default function createStartScene(engine: Engine) {
   );
   sceneData.camera = createArcRotateCamera(sceneData.scene);
 
-  // SCENE 2: A rough, overgrown woodland with dead trees and exposed stone.
   loadEnvironment(sceneData.scene, (assets) => {
     addAsset(assets, "DeadTree_1", [
       new Vector3(-5, 0, -4),

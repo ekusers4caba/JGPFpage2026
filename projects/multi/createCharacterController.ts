@@ -25,7 +25,7 @@ export async function createCharacterController(sceneData: SceneData) {
     );
   }
 
-  // Character settings
+
   const capsuleHeight = 1.8;
   const capsuleRadius = 0.35;
   const moveSpeed = 5.5;
@@ -35,14 +35,14 @@ export async function createCharacterController(sceneData: SceneData) {
   const gravity = new Vector3(0, -18, 0);
   const up = new Vector3(0, 1, 0);
 
-  // Starting position
+
   const startPosition = new Vector3(
     0,
     capsuleHeight / 2,
     0
   );
 
-  // Create character collider
+
   const displayCapsule = MeshBuilder.CreateCapsule(
     "CharacterColliderDebug",
     {
@@ -63,7 +63,7 @@ export async function createCharacterController(sceneData: SceneData) {
   debugMaterial.diffuseColor = new Color3(0.8, 0.2, 0.2);
   displayCapsule.material = debugMaterial;
 
-  // Create physics character controller
+
   const controller = new PhysicsCharacterController(
     startPosition.clone(),
     {
@@ -73,7 +73,7 @@ export async function createCharacterController(sceneData: SceneData) {
     scene
   );
 
-  // Allow scene transitions to reposition the farmer.
+
 (sceneData as any).teleportFarmer = (position: Vector3) => {
   controller.setPosition(position);
   controller.setVelocity(Vector3.Zero());
@@ -87,7 +87,7 @@ export async function createCharacterController(sceneData: SceneData) {
   );
 };
 
-  // Load Farmer model
+
   const imported = await SceneLoader.ImportMeshAsync(
     "",
     "./assets/men/",
@@ -109,7 +109,7 @@ export async function createCharacterController(sceneData: SceneData) {
   farmerRoot.position.set(0, 0, 0);
   sceneData.farmer = farmerRoot;
 
-  // Find animations
+
   sceneData.farmerIdleAnimation =
     imported.animationGroups.find(
       a => a.name === "Idle_Neutral"
@@ -127,14 +127,14 @@ export async function createCharacterController(sceneData: SceneData) {
       a => a.name === "Run"
     );
 
-  // Stop all animations before starting idle
+
   for (const group of imported.animationGroups) {
     group.stop();
   }
 
   sceneData.farmerIdleAnimation?.start(true);
 
-  // Keyboard input
+
   const keys = new Set<string>();
   let jumpRequested = false;
   let state = "ON_GROUND";
@@ -160,7 +160,7 @@ export async function createCharacterController(sceneData: SceneData) {
     }
   );
 
-  // Animation switching
+
   let activeAnimation = sceneData.farmerIdleAnimation;
 
   const setAnimation = (
@@ -175,7 +175,7 @@ export async function createCharacterController(sceneData: SceneData) {
     activeAnimation.start(true);
   };
 
-  // Main character update
+
   const renderObserver = scene.onBeforeRenderObservable.add(() => {
 
     const dt = Math.min(
@@ -185,7 +185,7 @@ export async function createCharacterController(sceneData: SceneData) {
 
     if (dt <= 0) return;
 
-    // Check ground support
+
     const down = new Vector3(0, -1, 0);
 
     const support = controller.checkSupport(
@@ -204,7 +204,7 @@ export async function createCharacterController(sceneData: SceneData) {
       state = "IN_AIR";
     }
 
-    // Movement input
+
     let x =
       (keyDown("d") || keyDown("arrowright") ? 1 : 0) -
       (keyDown("a") || keyDown("arrowleft") ? 1 : 0);
@@ -213,7 +213,7 @@ export async function createCharacterController(sceneData: SceneData) {
       (keyDown("w") || keyDown("arrowup") ? 1 : 0) -
       (keyDown("s") || keyDown("arrowdown") ? 1 : 0);
 
-    // Normalise diagonal movement
+
     const inputLength = Math.hypot(x, z);
 
     if (inputLength > 1) {
@@ -230,7 +230,7 @@ export async function createCharacterController(sceneData: SceneData) {
     const currentVelocity = controller.getVelocity();
     const forward = new Vector3(0, 0, 1);
 
-    // Jump transition
+
     if (state === "ON_GROUND" && jumpRequested) {
       state = "START_JUMP";
     }
@@ -285,7 +285,7 @@ export async function createCharacterController(sceneData: SceneData) {
       nextVelocity.y = currentVelocity.y;
     }
 
-    // Apply movement
+
     controller.setVelocity(nextVelocity);
 
     controller.integrate(
@@ -294,7 +294,7 @@ export async function createCharacterController(sceneData: SceneData) {
       gravity
     );
 
-    // Update player position
+
     const position = controller.getPosition();
 
     displayCapsule.position.copyFrom(position);
@@ -305,7 +305,7 @@ export async function createCharacterController(sceneData: SceneData) {
       position.z
     );
 
-    // Character animation
+
     const velocity = controller.getVelocity();
 
     const horizontalSpeedSq =
@@ -320,7 +320,7 @@ export async function createCharacterController(sceneData: SceneData) {
         : sceneData.farmerIdleAnimation
     );
 
-    // Rotate character towards movement direction
+  
     if (moving) {
       farmerRoot.rotationQuaternion =
         Quaternion.RotationYawPitchRoll(
@@ -331,7 +331,7 @@ export async function createCharacterController(sceneData: SceneData) {
     }
   });
 
-  // Cleanup references
+
   (scene as any).metadata = {
     ...(scene.metadata ?? {}),
 

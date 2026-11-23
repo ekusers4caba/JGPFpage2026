@@ -49,7 +49,6 @@ function createArcRotateCamera(scene: Scene) {
   return camera;
 }
 
-// Load each model once, then clone it to the positions listed below.
 function addAsset(
   assetsManager: AssetsManager,
   fileName: string,
@@ -101,7 +100,6 @@ export default function createStartScene(engine: Engine) {
   );
   sceneData.camera = createArcRotateCamera(sceneData.scene);
 
-  // SCENE 4: A colourful garden with a loose stepping-stone path.
   loadEnvironment(sceneData.scene, (assets) => {
     addAsset(assets, "TwistedTree_1", [
       new Vector3(-5, 0, -4),

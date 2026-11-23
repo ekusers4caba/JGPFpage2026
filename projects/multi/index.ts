@@ -36,7 +36,7 @@ const engine = new Engine(canvas, true, {}, true);
 const scenes: SceneData[] = [];
 let activeSceneIndex = 0;
 
-// Physics for one scene: a solid floor plus invisible walls round the edge.
+
 function addPhysics(sd: SceneData, havok: any) {
   const scene = sd.scene;
   scene.enablePhysics(new Vector3(0, -18, 0), new HavokPlugin(true, havok));
@@ -55,7 +55,6 @@ function addPhysics(sd: SceneData, havok: any) {
   solid("wallW", 1, 4, 16, -7.5, 2, 0);
 }
 
-// Switch scene when the player crosses an exit edge.
 function updateSceneTransitions() {
   const current = scenes[activeSceneIndex];
   if (!current?.farmer) return;
@@ -74,7 +73,6 @@ async function main() {
     const sd = create(engine);
     addPhysics(sd, havok);
 
-    // Arrow keys would also spin the camera; the player uses them instead.
     (sd.camera as ArcRotateCamera).inputs.removeByType("ArcRotateCameraKeyboardMoveInput");
 
     await createCharacterController(sd);
