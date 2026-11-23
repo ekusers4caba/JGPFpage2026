@@ -320796,7 +320796,7 @@ async function main() {
   }
   engine2.runRenderLoop(() => {
     updateSceneTransitions();
-    scenes[activeSceneIndex].scene.render();
+    scenes[activeSceneIndex]?.scene.render();
   });
   window.addEventListener("resize", () => engine2.resize());
 }

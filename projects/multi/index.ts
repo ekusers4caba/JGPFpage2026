@@ -83,7 +83,7 @@ async function main() {
 
   engine.runRenderLoop(() => {
     updateSceneTransitions();
-    scenes[activeSceneIndex].scene.render();
+    scenes[activeSceneIndex]?.scene.render();
   });
 
   window.addEventListener("resize", () => engine.resize());
