@@ -66,7 +66,7 @@ function createBox1(scene: Scene) {
 
   var texture = new StandardMaterial("reflective", scene);
   texture.ambientTexture = new Texture(
-    "./assets/textures/wood.jpg",
+    "./public/assets/textures/wood.jpg",
     scene
   );
   texture.diffuseColor = new Color3(1, 1, 1);
@@ -84,7 +84,7 @@ function createBox2(scene: Scene) {
 
   var texture = new StandardMaterial("reflective", scene);
   texture.ambientTexture = new Texture(
-    "./assets/textures/wood.jpg",
+    "./public/assets/textures/wood.jpg",
     scene
   );
   texture.diffuseColor = new Color3(1, 1, 1);
@@ -115,7 +115,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree1 = assetsManager.addMeshTask(
     "tree1 task",
     "",
-    "./assets/nature/glTF/",
+    "./public/assets/nature/glTF/",
     "CommonTree_1.gltf"
   );
   tree1.onSuccess = function (task) {
@@ -138,7 +138,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree2 = assetsManager.addMeshTask(
     "tree2 task",
     "",
-    "./assets/nature/glTF/",
+    "./public/assets/nature/glTF/",
     "CommonTree_2.gltf"
   );
   tree2.onSuccess = function (task) {
@@ -158,7 +158,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree3 = assetsManager.addMeshTask(
     "tree3 task",
     "",
-    "./assets/nature/glTF/",
+    "./public/assets/nature/glTF/",
     "CommonTree_3.gltf"
   );
   tree3.onSuccess = function (task) {
@@ -178,7 +178,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const farmer:MeshAssetTask = assetsManager.addMeshTask(
     "farmer task",
     "",
-    "./assets/men/",
+    "./public/assets/men/",
     "Farmer.gltf"
   );
   farmer.onSuccess = function (task) {
