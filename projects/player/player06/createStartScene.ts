@@ -159,8 +159,8 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree1 = assetsManager.addMeshTask(
     "tree1 task",
     "",
-    "./assets/nature/gltf/",
-    "CommonTree_1.gltf",
+    "./assets/nature/glTF/",
+    "CommonTree_1.glTF",
   );
   tree1.onSuccess = function (task) {
     const root = task.loadedMeshes[0];
@@ -180,8 +180,8 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree2 = assetsManager.addMeshTask(
     "tree2 task",
     "",
-    "./assets/nature/gltf/",
-    "CommonTree_2.gltf",
+    "./assets/nature/glTF/",
+    "CommonTree_2.glTF",
   );
   tree2.onSuccess = function (task) {
     const root = task.loadedMeshes[0];
@@ -221,7 +221,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
     "farmer task",
     "",
     "./assets/men/",
-    "Farmer.gltf",
+    "Farmer.glTF",
   );
   farmer.onSuccess = function (task) {
     const root = task.loadedMeshes[0];
