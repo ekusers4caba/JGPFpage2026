@@ -309119,7 +309119,7 @@ function createBox1(scene) {
   box.position.y = 3;
   box.position.z = 1;
   var texture = new StandardMaterial("reflective", scene);
-  texture.ambientTexture = new Texture("./assets/textures/wood.jpg", scene);
+  texture.ambientTexture = new Texture("./public/assets/textures/wood.jpg", scene);
   texture.diffuseColor = new Color3(1, 1, 1);
   box.material = texture;
   new PhysicsAggregate(box, PhysicsShapeType.BOX, { mass: 0.2, restitution: 0.1, friction: 0.4 }, scene);
@@ -309131,7 +309131,7 @@ function createBox2(scene) {
   box.position.y = 5;
   box.position.z = 1;
   var texture = new StandardMaterial("reflective", scene);
-  texture.ambientTexture = new Texture("./assets/textures/wood.jpg", scene);
+  texture.ambientTexture = new Texture("./public/assets/textures/wood.jpg", scene);
   texture.diffuseColor = new Color3(1, 1, 1);
   box.material = texture;
   new PhysicsAggregate(box, PhysicsShapeType.BOX, { mass: 0.2, restitution: 0.1, friction: 0.4 }, scene);
@@ -309148,7 +309148,7 @@ function mergeAndAggregate(mesh, scene) {
 }
 function addAssets(scene, sceneData) {
   const assetsManager = new AssetsManager(scene);
-  const tree1 = assetsManager.addMeshTask("tree1 task", "", "./assets/nature/gltf/", "CommonTree_1.gltf");
+  const tree1 = assetsManager.addMeshTask("tree1 task", "", "./public/assets/nature/gltf/", "CommonTree_1.gltf");
   tree1.onSuccess = function(task) {
     const root = task.loadedMeshes[0];
     const tree1Clone = root.clone("tree1_clone", null);
@@ -309160,7 +309160,7 @@ function addAssets(scene, sceneData) {
     const cloneMeshes = [tree1Clone, ...tree1Clone.getChildMeshes()];
     mergeAndAggregate(cloneMeshes, scene);
   };
-  const tree2 = assetsManager.addMeshTask("tree2 task", "", "./assets/nature/gltf/", "CommonTree_2.gltf");
+  const tree2 = assetsManager.addMeshTask("tree2 task", "", "./public/assets/nature/gltf/", "CommonTree_2.gltf");
   tree2.onSuccess = function(task) {
     const root = task.loadedMeshes[0];
     const tree2Clone = root.clone("tree1_clone", null);
@@ -309172,7 +309172,7 @@ function addAssets(scene, sceneData) {
     const cloneMeshes = [tree2Clone, ...tree2Clone.getChildMeshes()];
     mergeAndAggregate(cloneMeshes, scene);
   };
-  const tree3 = assetsManager.addMeshTask("tree3 task", "", "./assets/nature/gltf/", "CommonTree_3.gltf");
+  const tree3 = assetsManager.addMeshTask("tree3 task", "", "./public/assets/nature/gltf/", "CommonTree_3.gltf");
   tree3.onSuccess = function(task) {
     const root = task.loadedMeshes[0];
     const tree3Clone = root.clone("tree3_clone", null);
@@ -309184,7 +309184,7 @@ function addAssets(scene, sceneData) {
     const cloneMeshes = [tree3Clone, ...tree3Clone.getChildMeshes()];
     mergeAndAggregate(cloneMeshes, scene);
   };
-  const farmer = assetsManager.addMeshTask("farmer task", "", "./assets/men/", "Farmer.gltf");
+  const farmer = assetsManager.addMeshTask("farmer task", "", "./public/assets/men/", "Farmer.gltf");
   farmer.onSuccess = function(task) {
     const root = task.loadedMeshes[0];
     const farmerPivot = new TransformNode("farmer-pivot", scene);
