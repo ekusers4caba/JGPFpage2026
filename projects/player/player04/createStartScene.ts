@@ -66,7 +66,7 @@ function createBox1(scene: Scene) {
 
   var texture = new StandardMaterial("reflective", scene);
   texture.ambientTexture = new Texture(
-    "./public/assets/textures/wood.jpg",
+    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/textures/wood.jpg",
     scene
   );
   texture.diffuseColor = new Color3(1, 1, 1);
@@ -84,7 +84,7 @@ function createBox2(scene: Scene) {
 
   var texture = new StandardMaterial("reflective", scene);
   texture.ambientTexture = new Texture(
-    "./public/assets/textures/wood.jpg",
+    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/textures/wood.JPG",
     scene
   );
   texture.diffuseColor = new Color3(1, 1, 1);
@@ -115,7 +115,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree1 = assetsManager.addMeshTask(
     "tree1 task",
     "",
-    "./public/assets/nature/gltf/",
+    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/nature/gltf/",
     "CommonTree_1.gltf"
   );
   tree1.onSuccess = function (task) {
@@ -138,7 +138,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree2 = assetsManager.addMeshTask(
     "tree2 task",
     "",
-    "./public/assets/nature/gltf/",
+    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/nature/gltf/",
     "CommonTree_2.gltf"
   );
   tree2.onSuccess = function (task) {
@@ -158,7 +158,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree3 = assetsManager.addMeshTask(
     "tree3 task",
     "",
-    "./public/assets/nature/gltf/",
+    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/nature/gltf/",
     "CommonTree_3.gltf"
   );
   tree3.onSuccess = function (task) {
@@ -178,7 +178,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const farmer:MeshAssetTask = assetsManager.addMeshTask(
     "farmer task",
     "",
-    "./public/assets/men/",
+    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/men/",
     "Farmer.gltf"
   );
   farmer.onSuccess = function (task) {
