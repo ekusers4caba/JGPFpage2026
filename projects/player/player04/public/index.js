@@ -309172,7 +309172,7 @@ function addAssets(scene, sceneData) {
     const cloneMeshes = [tree2Clone, ...tree2Clone.getChildMeshes()];
     mergeAndAggregate(cloneMeshes, scene);
   };
-  const tree3 = assetsManager.addMeshTask("tree3 task", "", "./public/assets/nature/glTF/", "CommonTree_3.gltf");
+  const tree3 = assetsManager.addMeshTask("tree3 task", "", "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/nature/glTF/", "CommonTree_3.gltf");
   tree3.onSuccess = function(task) {
     const root = task.loadedMeshes[0];
     const tree3Clone = root.clone("tree3_clone", null);

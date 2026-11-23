@@ -158,7 +158,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
   const tree3 = assetsManager.addMeshTask(
     "tree3 task",
     "",
-    "./public/assets/nature/glTF/",
+    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/nature/glTF/",
     "CommonTree_3.gltf"
   );
   tree3.onSuccess = function (task) {
