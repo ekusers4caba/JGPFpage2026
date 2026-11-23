@@ -66,7 +66,7 @@ function createBox1(scene: Scene) {
 
   var texture = new StandardMaterial("reflective", scene);
   texture.ambientTexture = new Texture(
-    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/textures/wood.jpg",
+    "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/textures/wood.JPG",
     scene
   );
   texture.diffuseColor = new Color3(1, 1, 1);
@@ -116,7 +116,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
     "tree1 task",
     "",
     "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/nature/gltf/",
-    "CommonTree_1.gltf"
+    "CommonTree_1.GLTF"
   );
   tree1.onSuccess = function (task) {
     const root = task.loadedMeshes[0];
@@ -139,7 +139,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
     "tree2 task",
     "",
     "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/nature/gltf/",
-    "CommonTree_2.gltf"
+    "CommonTree_2.GLTF"
   );
   tree2.onSuccess = function (task) {
     const root = task.loadedMeshes[0];
@@ -159,7 +159,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
     "tree3 task",
     "",
     "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/nature/gltf/",
-    "CommonTree_3.gltf"
+    "CommonTree_3.GLTF"
   );
   tree3.onSuccess = function (task) {
     const root = task.loadedMeshes[0];
@@ -179,7 +179,7 @@ function addAssets(scene: Scene, sceneData: SceneData) {
     "farmer task",
     "",
     "https://ekusers4caba.github.io/JGPFpage2026/projects/player/player04/public/assets/men/",
-    "Farmer.gltf"
+    "Farmer.GLTF"
   );
   farmer.onSuccess = function (task) {
     const root = task.loadedMeshes[0];
