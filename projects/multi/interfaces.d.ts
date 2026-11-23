@@ -1,33 +1,14 @@
-import {
-  Scene,
-  Mesh,
-  HemisphericLight,
-  Camera,
-} from "@babylonjs/core";
-
-import {
-  AdvancedDynamicTexture,
-  Button,
-} from "@babylonjs/gui";
+import { Scene, Mesh, HemisphericLight, Camera, AnimationGroup, TransformNode, Vector3 } from "@babylonjs/core";
 
 export interface SceneData {
-      scene:     Scene;
-      light?:    HemisphericLight;
-      ground?:   Mesh;
-      cylinder?: Mesh;
-      sphere?:   Mesh;
-      box?:      Mesh
-      torus?:    Mesh;
-      tube?:     Mesh; 
-      camera?:   Camera;
-}
+  scene: Scene;
+  light?: HemisphericLight;
+  ground?: Mesh;
+  camera?: Camera;
 
-export interface GuiData {
-      scene: Scene;
-      advancedTexture?: AdvancedDynamicTexture;
-      button1?: Button;
-      button2?: Button;
-      button3?: Button;
-      button4?: Button;
-      camera?: Camera;
+  // Player
+  farmer?: TransformNode;
+  teleportFarmer?: (position: Vector3) => void;
+  farmerIdleAnimation?: AnimationGroup;
+  farmerWalkAnimation?: AnimationGroup;
 }
