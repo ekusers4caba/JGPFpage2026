@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scene Five Documentation</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="./documentation/documentation.css">
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="./documentation/index.html">Christopher Abraham <span>- B01744581</span></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="./documentation/documentation.html">Documentation</a>
+    </nav>
+  </header>
+
+  <section class="scene-section" id="contents">
+    <div class="section-title">
+      <p class="small-heading">SIX SECTIONS</p>
+      <h2>Jump to a section.</h2>
+    </div>
+      <a class="scene-link" href="#index-ts">
+        <span class="number">01</span>
+        <div><h3>Index.ts</h3><p>Canvas, engine, scene list and the main loop</p></div>
+        <span class="arrow">&darr;</span>
+      </a>
+      <a class="scene-link" href="#physics">
+        <span class="number">02</span>
+        <div><h3>Physics: the floor and walls</h3><p>Gravity, the invisible floor and walls</p></div>
+        <span class="arrow">&darr;</span>
+      </a>
+      <a class="scene-link" href="#transitions">
+        <span class="number">03</span>
+        <div><h3>Scene transitions</h3><p>Walking off one edge into the next scene</p></div>
+        <span class="arrow">&darr;</span>
+      </a>
+      <a class="scene-link" href="#scene-files">
+        <span class="number">04</span>
+        <div><h3>The four scene files</h3><p>Light, ground, camera and assets</p></div>
+        <span class="arrow">&darr;</span>
+      </a>
+      <a class="scene-link" href="#player">
+        <span class="number">05</span>
+        <div><h3>The player</h3><p>Capsule, model, input, movement and teleporting</p></div>
+        <span class="arrow">&darr;</span>
+      </a>
+      <a class="scene-link" href="#havok">
+        <span class="number">06</span>
+        <div><h3>Havok.ts and interfaces.d.ts</h3><p>The physics engine and the scene types</p></div>
+        <span class="arrow">&darr;</span>
+      </a>
+  </section>
+
+  <main class="documentation">
+
+    <section id="index-ts">
+      <p class="small-heading">01</p>
+      <h2>Index.ts</h2>
+      <p>This is the main file. It sets everything up and then runs the scenes.</p>
+
+      <figure><img src="./documentation/images/CanvasCode.png" alt="Code that creates the canvas and the Babylon.js engine" loading="lazy"></figure>
+      <p>The canvas is the box on the page where the 3D scene is made. The engine is Babylon.js's renderer. There is one canvas and one engine, and all four scenes share them.</p>
+
+      <h3>The scene list</h3>
+      <figure><img src="./documentation/images/ScenesCode.png" alt="Code declaring the scenes array and activeSceneIndex" loading="lazy"></figure>
+      <p><code>scenes</code> holds the four scenes once they're built. Index 0 is Scene 1, index 1 is Scene 2, and so on. <code>activeSceneIndex</code> says which one is on screen at that time.</p>
+
+      <h3>Main()</h3>
+      <figure><img src="./documentation/images/MainCode.png" alt="The Main function that loads Havok and builds each scene" loading="lazy"></figure>
+      <p><code>Main()</code> waits for Havok to load first, because the physics can't start without it. Then the loop builds each scene, adds physics, then adds the farmer player controller. The farmer takes a moment to load, which is why there's an <code>await</code> present. The render loop runs each frame. It checks for the player crossing the edge, then renders only the active scene. The other scenes are "frozen" until the player goes back to them.</p>
+
+      <h3>Arrow keys and the camera</h3>
+      <figure><img src="./documentation/images/ArcRotateCode.png" alt="Code that removes the arrow key inputs from the camera" loading="lazy"></figure>
+      <p>By default, the arrow keys spin the camera. The player uses the arrow keys too, so this line turns that off for the camera. You can still drag with the mouse to look around.</p>
+    </section>
+
+    <section id="physics">
+      <p class="small-heading">02</p>
+      <h2>Physics: the floor and walls</h2>
+
+      <figure><img src="./documentation/images/AddPhysicsCode.png" alt="The addPhysics function with the floor and four invisible walls" loading="lazy"></figure>
+      <p>The player is moved by a physics engine, so each scene needs physics switched on and something solid to stand upon. That's what the <code>addPhysics</code> function does.</p>
+      <p><code>enablePhysics</code> takes the gravity and the physics plugin. Gravity is -18 on the Y axis, which is stronger than real life so jumps feel snappy. The <code>havok</code> object is the one loaded earlier.</p>
+      <p>The <code>solid</code> helper makes a box, places it, hides it and gives it a physics body. <code>Mass: 0</code> means the box is fixed in place. Nothing can push it around.</p>
+      <p>The floor is a flat sheet with no thickness, and physics needs something with depth to stand on. So there's an invisible box, 1 unit thick, sitting just under it. Its top is at height 0, level with the ground which the player can see.</p>
+      <p>Four invisible walls sit just outside the ground (at 7.5, where the ground ends at 7). They're 4 units tall, so the player can't walk or jump over them. Hidden meshes still collide, which is why <code>isVisible = false</code> is enough.</p>
+    </section>
+
+    <section id="transitions">
+      <p class="small-heading">03</p>
+      <h2>Scene transitions</h2>
+      <p>Two scripts work together for this part. <code>sceneTransitions.ts</code> answers the question "has the player reached the edge of the scene, which edge, and what scene do I pick?" <code>index.ts</code> works with that answer.</p>
+
+      <figure><img src="./documentation/images/SceneTransitionCode.png" alt="The sceneTransitions.ts code that checks each edge of the scene" loading="lazy"></figure>
+      <p>The code gives it the current scene index and the player's current position. It returns either <code>null</code> or a destination scene and the spot to move the player to when it loads.</p>
+
+      <dl class="doc-values">
+        <div><dt>Edge = 6</dt><dd>How far from the centre of the scene the player has walked to trigger an exit. The ground ends at 7, so this is just before the edge.</dd></div>
+        <div><dt>Spawn = 5</dt><dd>Where the player appears in the next scene. It's a bit inside the edge on purpose. If the player was placed at 6 it would trigger going back to the previous scene.</dd></div>
+        <div><dt>Y = 0.9</dt><dd>The height of the middle of the player's model, so the player appears standing on the ground.</dd></div>
+      </dl>
+
+      <figure><img src="./documentation/images/Scene5Layout.png" alt="Diagram of the player leaving one scene and entering the next from the opposite side" loading="lazy"></figure>
+      <p>The player comes in on the opposite side from where they left. Walk out of the right edge and they appear at the left of the next scene.</p>
+
+      <h3>The check in index.ts</h3>
+      <figure><img src="./documentation/images/UpdateSceneTrCode.png" alt="The per-frame edge check in index.ts" loading="lazy"></figure>
+      <p>This runs once per frame, before rendering. It looks at where the player is. If they passed an edge, it makes the next scene the active one and moves that scene's player to the spawn point. Each scene has its own player, so the one in the next scene is moved, not the one the player left behind.</p>
+      <p><code>teleportFarmer</code> is used rather than setting the position directly. The physics controller keeps its own idea of where the player is and would overwrite a direct change on the next frame. <code>teleportFarmer</code> updates both.</p>
+    </section>
+
+    <section id="scene-files">
+      <p class="small-heading">04</p>
+      <h2>The four scene files</h2>
+
+      <figure><img src="./documentation/images/LGC code.png" alt="Project folder structure showing the scene1 to scene4 folders" loading="lazy"></figure>
+      <p>Each of the scene1 to scene4 folders contains a <code>createStartScene.ts</code>. They are almost identical! Only the ground colour and the assets change.</p>
+      <figure><img src="./documentation/images/AddAssetCode.png" alt="The createStartScene code with the light, ground and camera" loading="lazy"></figure>
+      <dl class="doc-values">
+        <div><dt>Light</dt><dd>a soft light from above that lights the whole scene evenly.</dd></div>
+        <div><dt>Ground</dt><dd>a flat 14 by 14 squares. It forms from -7 to 7 in both directions, which is where we get the edge numbers from.</dd></div>
+        <div><dt>Camera</dt><dd>an orbit camera that circles the point (0, 1, 0). It starts 14 units away, looking towards the far edge. It doesn't follow the player's model. The whole scene fits in the view.</dd></div>
+      </dl>
+
+      <figure><img src="./documentation/images/LoadEnvCode.png" alt="Code loading a model file once and cloning it to a second position" loading="lazy"></figure>
+      <p>Each model file is loaded once. The first copy goes at the first position, then it's simply cloned for every other position. That's why a call like this puts two trees in the scene while only loading the file once.</p>
+      <p><code>loadEnvironment</code> just creates an <code>AssetsManager</code>, runs the list of <code>addAsset</code> calls, and starts loading. It also prints an error in the console if a file is missing.</p>
+
+      <h3>The scenes</h3>
+      <dl class="doc-values doc-values-2">
+        <div><dt>Scene 1</dt><dd>Contains a woodland clearing inspired scene, with nice bushes, ferns and flowers and a fresh green aesthetic.</dd></div>
+        <div><dt>Scene 2</dt><dd>Showcases an overgrown scene with dead and twisted trees, rocks and mushrooms.</dd></div>
+        <div><dt>Scene 3</dt><dd>Shows a pine grove with pebbles, clover and a small stone path.</dd></div>
+        <div><dt>Scene 4</dt><dd>Holds a bright, colourful garden with flowers and a stepping-stone path.</dd></div>
+      </dl>
+      <p>The trees and rocks are only for looks and don't contain any physics, so the player doesn't get stuck (they can walk right through them).</p>
+    </section>
+
+    <section id="player">
+      <p class="small-heading">05</p>
+      <h2>The player</h2>
+
+      <figure><img src="./documentation/images/ConstCode.png" alt="Top of createCharacterController.ts with the speed and jump settings" loading="lazy"></figure>
+      <p><code>createCharacterController.ts</code> runs once per scene. It creates the player, listens to the keyboard inputs and moves the player every frame.</p>
+      <p>These are the values you'd change to alter the sensitivity and speed. Walking speed is <code>moveSpeed</code>, and <code>airSpeed</code> is the slower sideways speed while jumping.</p>
+
+      <h3>The physics body</h3>
+      <figure><img src="./documentation/images/ControllerCode.png" alt="Code that creates the capsule character controller" loading="lazy"></figure>
+      <p>Physics treats the player as an invisible capsule 1.8 units tall. The capsule is what bumps into walls and stands on the floor. The player model is just a picture that follows it around. The position starts at half the capsule's height, so he begins standing on the ground.</p>
+
+      <h3>The player model</h3>
+      <figure><img src="./documentation/images/FarmerRootCode.png" alt="Code that loads the farmer model and parents its meshes to farmerRoot" loading="lazy"></figure>
+      <p>The model file comes with lots of separate meshes. They are all attached to one empty node named <code>farmerRoot</code>, so moving that one node moves the whole farmer player model. It's saved as <code>sceneData.farmer</code>, which is what <code>index.ts</code> reads when it checks for edges.</p>
+      <p>The animations come in with the model. The code looks for one called <code>Idle_Neutral</code> (or <code>Idle</code>) for standing and <code>Walk</code> (or <code>Run</code>) for moving, and starts with the idle animation playing.</p>
+
+      <h3>Reading the input</h3>
+      <figure><img src="./documentation/images/InputCode.png" alt="Keyboard listeners that add and remove keys from the keys list" loading="lazy"></figure>
+      <p><code>keys</code> contains a list of the keys held down at that time. A key goes in when you press it and comes out when you let go. Pressing space doesn't jump immediately. It sets <code>jumpRequested</code>, and the frame update picks it up.</p>
+
+      <h3>The frame update</h3>
+      <figure><img src="./documentation/images/ControllerUpdateCode.png" alt="The start of the per-frame update function" loading="lazy"></figure>
+      <p>This is the main part. It runs before every frame is made.</p>
+
+      <figure><img src="./documentation/images/KBInputCode.png" alt="Ground check and direction input handling" loading="lazy"></figure>
+      <p>The controller asks whether there's something under the capsule. If so, the player is on the ground. If not, the player is in the air.</p>
+      <p>D and right-arrow keys push x up, A and left-arrow push it down. The same goes for W, S, up and down arrows on z. If the player holds two keys at once, the code scales the direction down so going diagonally isn't faster than going straight.</p>
+
+      <dl class="doc-values">
+        <div><dt>Jumping</dt><dd>the upward speed is set from the jump height and gravity, using <code>Math.sqrt(2 * gravity * jumpHeight)</code>, which is the speed needed to reach that height exactly.</dd></div>
+        <div><dt>In the air</dt><dd>sideways movement is allowed at the slower <code>airSpeed</code> and gravity pulls the player down every frame.</dd></div>
+        <div><dt>On the ground</dt><dd>the controller works out the walking velocity following the surface under the player.</dd></div>
+      </dl>
+
+      <figure><img src="./documentation/images/NextVeloCode.png" alt="Code for calculating the walking velocity on the ground" loading="lazy"></figure>
+
+      <figure><img src="./documentation/images/PositionCode.png" alt="The integrate step and the model position offset" loading="lazy"></figure>
+      <p><code>Integrate</code> is the step where the controller moves the player, stopping it at the walls and floor.</p>
+      <p>The capsule's position is its origin, its middle. But the feet of the model should be at the bottom. So half the capsule's height is taken off.</p>
+
+      <figure><img src="./documentation/images/AnimationCode.png" alt="Code that switches between the walk and idle animations and rotates the model" loading="lazy"></figure>
+      <p>If the player is moving, play the walk animation. If not, play idle. While the player moves, turn to face the direction the player is moving. <code>Atan2</code> converts a direction into an angle.</p>
+
+      <h3>Teleporting</h3>
+      <figure><img src="./documentation/images/TeleportCode.png" alt="The teleportFarmer function" loading="lazy"></figure>
+      <p>This is what <code>index.ts</code> calls when the player crosses an edge. It moves the physics capsule and the farmer model at the same time. <code>setVelocity</code> stops the player from carrying their old speed into the next scene.</p>
+    </section>
+
+    <!-- 06 -->
+    <section id="havok">
+      <p class="small-heading">06</p>
+      <h2>Havok.ts and interfaces.d.ts</h2>
+
+      <figure><img src="./documentation/images/HavokCode.png" alt="Havok.ts, the function that loads the Havok physics engine" loading="lazy"></figure>
+      <p>Havok is the physics engine. It's written in WebAssembly, so the browser must download a <code>.wasm</code> file before it can use it. This function tells Havok where to find that file (Babylon.js's own server) and waits until it's ready. <code>Index.ts</code> calls it once and hands the result to every scene. This file does not change.</p>
+
+      <figure><img src="./documentation/images/ImportExportCode.png" alt="The interfaces.d.ts type definitions for what each scene keeps" loading="lazy"></figure>
+      <p>This code shows what each scene keeps: the scene itself, the lighting, ground, camera and the player's values. The "?" means "might not be there yet". For example, <code>farmer</code> doesn't exist until the model has finished loading. It's only for TypeScript's error checking and does nothing when the code runs.</p>
+    </section>
+
+  </main>
+
+  <section class="doc-section">
+    <div>
+      <p class="small-heading">SCENES</p>
+      <h2>Want to see it in action?</h2>
+      <p>Scene five is the one this page explains. Walk to the edge of the ground to move between environments.</p>
+    </div>
+    <a class="doc-button" href="./projects/multi/public/index.html">Open scene five &gt;</a>
+  </section>
+
+  <footer>
+    <p>Made for my university project.</p>
+    <p>HTML / CSS / JAVASCRIPT / BABYLON.JS</p>
+  </footer>
+
+</body>
+</html>

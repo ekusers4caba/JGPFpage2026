@@ -1,0 +1,97 @@
+/* Extras for documentation.html only. Uses the colours from style.css. */
+
+/* Hero: text only, so a single column instead of text + image */
+.doc-hero { grid-template-columns: 1fr; padding-bottom: 80px; }
+
+/* Contents rows reuse .scene-link; this keeps the text block tidy */
+.scene-section .section-title .small-heading { margin-bottom: 12px; }
+
+/* Documentation body (extends .documentation from style.css) */
+.documentation { max-width: 880px; }
+
+.documentation section {
+    padding-top: 10px;
+    scroll-margin-top: 20px;
+}
+.documentation section + section {
+    margin-top: 60px;
+    padding-top: 50px;
+    border-top: 1px solid #DED7CA;
+}
+.documentation section > .small-heading { margin-bottom: 10px; }
+.documentation section h2 { margin-top: 0; font-size: 30px; letter-spacing: -1px; }
+
+.documentation h3 {
+    font-size: 17px;
+    margin: 38px 0 12px;
+    color: #242321;
+}
+.documentation p { margin-bottom: 14px; max-width: 700px; }
+.documentation strong { color: #242321; }
+.documentation em { color: #242321; }
+
+.documentation ul { margin: 6px 0 18px 20px; max-width: 700px; }
+.documentation li {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #777168;
+    margin-bottom: 6px;
+}
+.documentation li::marker { color: #F07835; }
+
+/* Screenshots */
+.documentation figure { margin: 22px 0 26px; }
+.documentation figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    background: #E8DCCB;
+    border: 1px solid #DED7CA;
+    border-radius: 3px;
+}
+
+/* Inline code names (moveSpeed, index.ts ...) */
+.documentation code {
+    background: #E8DCCB;
+    color: #242321;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12.5px;
+}
+
+/* Edge / Spawn / Y cards */
+.doc-values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 24px 0 30px;
+}
+.doc-values > div {
+    background: #242321;
+    padding: 22px;
+    border-radius: 3px;
+}
+.doc-values dt {
+    color: #F07835;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+.doc-values dd {
+    color: #B9B1A5;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+    .documentation { padding: 50px 20px; }
+}
+
+/* Two-column version for the four scene cards */
+.doc-values-2 { grid-template-columns: repeat(2, 1fr); }
+.doc-values code { background: #3A3733; color: #F5F0E6; }
+
+@media (max-width: 600px) {
+    .doc-values-2 { grid-template-columns: 1fr; }
+}
