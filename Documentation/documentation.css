@@ -1,12 +1,7 @@
-/* Extras for documentation.html only. Uses the colours from style.css. */
-
-/* Hero: text only, so a single column instead of text + image */
 .doc-hero { grid-template-columns: 1fr; padding-bottom: 80px; }
 
-/* Contents rows reuse .scene-link; this keeps the text block tidy */
 .scene-section .section-title .small-heading { margin-bottom: 12px; }
 
-/* Documentation body (extends .documentation from style.css) */
 .documentation { max-width: 880px; }
 
 .documentation section {
@@ -50,7 +45,6 @@
     border-radius: 3px;
 }
 
-/* Inline code names (moveSpeed, index.ts ...) */
 .documentation code {
     background: #E8DCCB;
     color: #242321;
@@ -60,7 +54,6 @@
     font-size: 12.5px;
 }
 
-/* Edge / Spawn / Y cards */
 .doc-values {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -88,7 +81,6 @@
     .documentation { padding: 50px 20px; }
 }
 
-/* Two-column version for the four scene cards */
 .doc-values-2 { grid-template-columns: repeat(2, 1fr); }
 .doc-values code { background: #3A3733; color: #F5F0E6; }
 
